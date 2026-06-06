@@ -21,6 +21,43 @@ body {
   gap: 20px;
 }
 
+#taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 30px;
+  z-index: 499;
+}
+
+#taskbar .grid-os {
+  width: 60px;
+  height: 60px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#taskbar .grid-os:hover {
+  background: rgba(103, 103, 103, 0.8);
+}
+
+#taskbar .grid-os img {
+  width: 30px;
+  height: 30px;
+}
+
+#taskbar .grid-os img:hover {
+  scale: 110%;
+  transition: 0.3s;
+  background: none;
+}
+
 .context-menu {
   z-index: 1000;
   width: 250px;
@@ -31,6 +68,8 @@ body {
   border-radius: 10px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
   height: 80px;
   width: 120px;
   font-size: 18px;

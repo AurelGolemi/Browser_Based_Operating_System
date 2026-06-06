@@ -20,17 +20,10 @@ function openApp(appId) {
     appWindow.remove();
   });
 
-  // appWindow.innerHTML = `
-  // <div class="title-bar">
-  //   <span>${appId}</span>
-  //   <button onclick="closeApp('${appId}')">✕</button>
-  // </div>
-  // <div class="app-content" id="content-${appId}"></div>
-  // `;
-
   titleBar.appendChild(closeBtn);
   appWindow.appendChild(titleBar);
   document.getElementById("desktop").appendChild(appWindow);
+  document.getElementById("taskbar").appendChild(appWindow);
 
   const appScript = document.createElement('script');
   appScript.src = `/${appId}`;
