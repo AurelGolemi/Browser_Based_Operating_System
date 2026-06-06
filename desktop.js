@@ -2,15 +2,39 @@ let gridItems = document.querySelectorAll('.grid-os');
 let body = document.querySelector('body');
 
 function openApp(appId) {
-  const appWindow = document.createElement('iframe');
-  appWindow.id = appId;
+  const appWindow = document.createElement('div');
+  appWindow.id = window-`${appId}`;
   appWindow.classList.add('app-window');
-  appWindow.style.width = features.split(',')[0].split('=')[1] + 'px';
-  appWindow.style.height = features.split(',')[1].split('=')[1] + 'px';
-  appWindow.innerHTML = `<iframe src="${appId}" frameborder="0" style="width: 100%; height: 100%;"></iframe>`;
-  body.appendChild(appWindow);
-  appWindow.focus();
-  window.open(url, appWindow);
+
+  appWindow.style.width = '800px';
+  appWindow.style.height = '500px';
+  appWindow.style.border = '1px solid #fff';
+
+  const titleBar = document.createElement('div');
+  titleBar.classList.add('title-bar');
+
+  const closeBtn = document.createElement('btn');
+  closeBtn.textContent = '✕';
+
+  closeBtn.addEventListener('click', () => {
+    appWindow.remove();
+  });
+
+  // appWindow.innerHTML = `
+  // <div class="title-bar">
+  //   <span>${appId}</span>
+  //   <button onclick="closeApp('${appId}')">✕</button>
+  // </div>
+  // <div class="app-content" id="content-${appId}"></div>
+  // `;
+
+  titleBar.appendChild(closeBtn);
+  appWindow.appendChild(titleBar);
+  document.getElementById("desktop").appendChild(appWindow);
+
+  const appScript = document.createElement('script');
+  appScript.src = `/${appId}`;
+  document.body.appendChild(appScript);
 }
 
 gridItems.forEach(item => {
@@ -46,22 +70,10 @@ gridItems.forEach(item => {
       window.openApp('/App/file-explorer.js', '_blank', 'width=400', 'height=300');
     }
 
-    const notes = window.openApp('', '_blank', 'width=400,height=300').document.write(`
-      <!DOCTYPE html>
-        <html lang="en">
-        <head>
-            <meta charset="UTF-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>Notes</title>
-        </head>
-        <body>
-            <textarea id="notes-textarea" placeholder="Enter your notes here..." style="width: 100%; height: 100%;"></textarea>
-        </body>
-        </html>`
-    );
-    if (notes) {
-      item.setAttribute('data-notes', notes);
-    };
+    const notes = document.getElementById('notes');
+    if (item === notes) {
+      window.openApp('/App/file-explorer.js', '_blank', 'width=400', 'height=300');
+    }
 
     const settings = document.getElementById('settings');
     if (item === settings) {
