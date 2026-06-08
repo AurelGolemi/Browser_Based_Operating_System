@@ -1,19 +1,27 @@
-let thisPc = document.getElementById('this-pc');
+/* App/this-pc.js - mount-friendly */
+(function () {
+  const containerId = window.__APP_CONTAINER_ID__ || null;
+  const root = containerId ? document.getElementById(containerId) : null;
 
-const fileSystem = {
-  'C:': {
-    'Program Files': {
-      'File Explorer.exe': 'This is the File Explorer executable.',
-      'Notepad.exe': 'This is the Notepad executable.',
-      'Settings.exe': 'This is the Settings executable.',
-      'Music.exe': 'This is the Music executable.',
-    },
-    'Users': {
-      'User': {
-        'Documents': {
-
-        }
-      }
-    }
+  function render(rootEl) {
+    rootEl.innerHTML = '';
+    const h = document.createElement('h2');
+    h.textContent = 'This PC';
+    rootEl.appendChild(h);
+    const p = document.createElement('p');
+    p.textContent = 'Files and drives would appear here.';
+    rootEl.appendChild(p);
   }
-}
+
+  if (root) {
+    render(root);
+  } else {
+    // fallback if loaded in top-level page
+    document.addEventListener('DOMContentLoaded', () => {
+      const bodyRoot = document.createElement('div');
+      bodyRoot.style.padding = '20px';
+      render(bodyRoot);
+      document.body.appendChild(bodyRoot);
+    });
+  }
+})();
