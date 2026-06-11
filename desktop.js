@@ -105,6 +105,7 @@ function openApp({src, title = 'App', width = 800, height = 500}) {
   let startTop = 0;
 
   titleBar.addEventListener('pointerdown', (e) => {
+    if (e.target.classList.contains('control-btn')) return;
     isDragging = true;
     startX = e.clientX;
     startY = e.clientY;
@@ -127,14 +128,21 @@ function openApp({src, title = 'App', width = 800, height = 500}) {
   });
 
   let prevRect = null;
+
   btnMin.addEventListener('click', (e) => {
     e.stopPropagation();
-    win.classList.add('minimized');
+    if (win.classList.contains('minimized')) {
+      win.classList.remove('minimized');
+      bringToFront(win);
+    } else {
+      win.classList.add('minimized');
+    }
   });
 
   btnMax.addEventListener('click', (e) => {
     e.stopPropagation();
     if (!win.classList.contains('maximized')) {
+      win.classList.remove('minimized');
       prevRect = {
         left: win.style.left,
         top: win.style.top,
